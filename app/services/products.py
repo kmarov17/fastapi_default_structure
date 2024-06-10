@@ -7,24 +7,23 @@ async def create_product(product, db):
     product = Products(**product)
 
     db.add(product)
-
     db.commit()
-
     db.refresh(product)
+
     return product
+
 async def update_product(product_id: int, product_data, db):    
     # Récupérer le product existant à mettre à jour
     product = db.query(Products).filter(Products.id == product_id).first()
     if product is None:
-        raise HTTPException(status_code=404, detail=f"product with id {product_id} not found")
+        raise HTTPException(status_code=404, detail=f"Product with id {product_id} not found")
 
     # Mettre à jour les champs du product
     for key, value in product_data.items():
         setattr(product, key, value)
         
-    db.commit()  # Valider les changements de la transaction
-
-    db.refresh(product)  # Rafraîchir l'objet infra_product après les modifications
+    db.commit()
+    db.refresh(product)
 
     return product
 
@@ -34,14 +33,13 @@ async def get_products(limit, page, search, db):
 
         datas = db.query(Products)
 
-        # Filtrer en fonction du nom de product
+        # Filtrer by product name
         datas = datas.filter(Products.name.ilike(f'%{search}%'))
 
         if page > 0:
             products = datas.limit(limit).offset(skip).all()
         else :
-            products = datas.all()
-
+            products = datas.all() # Return all datas if page == 0
 
         return products
     except Exception as e:
@@ -62,10 +60,10 @@ async def delete_product(product_id: int, db):
     # Récupérer le product existante à supprimer
     product = db.query(Products).filter(Products.id == product_id).first()
     if product is None:
-        raise HTTPException(status_code=404, detail=f"product with id {product_id} not found")
+        raise HTTPException(status_code=404, detail=f"Product with id {product_id} not found")
 
     # Supprimer le product lui même
     db.delete(product)
     db.commit()
 
-    return {"message": f"product with id {product_id} deleted successfully"}
+    return {"message": f"Product with id {product_id} deleted successfully"}

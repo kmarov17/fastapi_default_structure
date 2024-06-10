@@ -7,8 +7,6 @@ from app.models.tables import Base
 SQLALCHEMY_DATABASE_URL = "sqlite:///./sql_app.db"
 
 try : 
-    
-    #Base = declarative_base()
     engine = create_engine(SQLALCHEMY_DATABASE_URL)
     Base.metadata.create_all(bind=engine) 
      
@@ -17,7 +15,6 @@ try :
      
     def  get_db(): 
         try : 
- 
             print('success session') 
  
             session=SessionLocal()  
@@ -27,8 +24,6 @@ try :
         finally : 
             session.close() 
             print('session closed') 
- 
- 
+
 except Exception as ex : 
     print("********************", ex)
-
