@@ -2,6 +2,16 @@
 
 This repository contains a ready-to-use FastAPI project template. It is intended to be used with the `fastapi_project_initializer` library to clone this template, create a virtual environment, and install dependencies automatically.
 
+```
+By
+    ***   ***   ******   ******   ***********   ***********   **********   ***  ***
+    ***  **     ******   ******   ***********   ***     ***   **********   ***  ***
+    ******      *** *** *** ***   ***     ***   ***     ***   ***    ***   ***  ***
+    ******      ***   ***   ***   ***********   *********     ***    ***   ***  ***
+    ***  **     ***    *    ***   ***     ***   ***     **    **********    **  **
+    ***   ***   ***         ***   ***     ***   ***     ***   **********     ****
+```
+
 ## Contents
 
 - **main.py**: The main file for the FastAPI application.
