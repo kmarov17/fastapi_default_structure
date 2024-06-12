@@ -70,26 +70,21 @@ This will do the following:
 
 Here is a brief description of the main files and folders in this project template:
 
-fastapi_project/
+```
+my_fastapi_project/
+│
 ├── app/
-│ ├── configs/
-│ │ └── # Application configuration files
-│ ├── models/
-│ │ └── # Data model files
-│ ├── routes/
-│ │ └── # Routing (routes) files
-│ ├── services/
-│ │ └── # Application service files
-│ ├── utils/
-│ │ └── # Utilities and tools
-├─| tests/
-    └── # Unit test files for the application
-├── main.py
-  └── # Main application entry point
-├── requirements.txt # File listing the Python dependencies
-├── .gitignore # File to ignore specific files/folders in git
-└── README.md # Project documentation
-
+│   ├── configs/           # Application configuration files
+│   ├── models/            # Data model files
+│   ├── routes/            # Routing (routes) files
+│   ├── services/          # Application service files
+│   └── utils/             # Utilities and tools
+├── tests/                 # Unit test files for the application
+├── main.py                # Main application entry point
+├── requirements.txt       # File listing the Python dependencies
+├── .gitignore             # File to ignore specific files/folders in git
+└── README.md              # Project documentation
+```
 
 
 ## Contributing
