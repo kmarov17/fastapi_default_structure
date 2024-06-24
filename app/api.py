@@ -16,6 +16,6 @@ app.include_router(products_router)
 
 @app.get("/", tags=["root"])
 async def read_root() -> dict:
-    return {"message": "Welcome to fast_api_initialize"}
+    return {"message": "Welcome to fast_api_initializer"}
 
 
