@@ -17,6 +17,7 @@ By
 - **main.py**: The main file for the FastAPI application.
 - **requirements.txt**: List of necessary dependencies for the project.
 - **.gitignore**: File to ignore certain files/folders in the git repository.
+- **Dockerfile**: File to build fastapi docker image
 - **/app**: Folder with other important files of the API.
 - **README.md**: This file.
 
@@ -93,6 +94,7 @@ my_fastapi_project/
 ├── main.py                # Main application entry point
 ├── requirements.txt       # File listing the Python dependencies
 ├── .gitignore             # File to ignore specific files/folders in git
+├── Dockerfile             # File to build fastapi docker image
 └── README.md              # Project documentation
 ```
 
