@@ -1,69 +1,39 @@
 from fastapi import HTTPException
 
-from app.models.tables import Products
+from app.configs.tables import Products
+from app.utils import db_utils as db
 
-
-async def create_product(product, db):
-    product = Products(**product)
-
-    db.add(product)
-    db.commit()
-    db.refresh(product)
-
-    return product
-
-async def update_product(product_id: int, product_data, db):    
-    # Récupérer le product existant à mettre à jour
-    product = db.query(Products).filter(Products.id == product_id).first()
-    if product is None:
-        raise HTTPException(status_code=404, detail=f"Product with id {product_id} not found")
-
-    # Mettre à jour les champs du product
-    for key, value in product_data.items():
-        setattr(product, key, value)
-        
-    db.commit()
-    db.refresh(product)
-
-    return product
-
-async def get_products(limit, page, search, db):
+async def get_all_products():
     try:
-        skip = (page - 1) * limit
-
-        datas = db.query(Products)
-
-        # Filtrer by product name
-        datas = datas.filter(Products.name.ilike(f'%{search}%'))
-
-        if page > 0:
-            products = datas.limit(limit).offset(skip).all()
-        else :
-            products = datas.all() # Return all datas if page == 0
-
+        products = await db.get_all(Products)
         return products
     except Exception as e:
-        raise HTTPException(status_code=500, detail=f"{e}")
-
-async def get_product(item_id, db):
+        raise HTTPException(status_code=500, detail=f"Error fetching products: {e}") from e
+    
+async def get_product(item_id):
     try:
-        product = db.query(Products).filter(Products.id == item_id).first()
-
-        if product is None:
-            raise HTTPException(status_code=404, detail=f"Product with id {item_id} not found")
-        
+        product = await db.get_by_id(Products, item_id)
         return product
     except Exception as e:
-        raise HTTPException(status_code=500, detail=str(e))
+        raise HTTPException(status_code=500, detail=f"Error fetching product: {e}") from e
     
-async def delete_product(product_id: int, db):
-    # Récupérer le product existante à supprimer
-    product = db.query(Products).filter(Products.id == product_id).first()
-    if product is None:
-        raise HTTPException(status_code=404, detail=f"Product with id {product_id} not found")
-
-    # Supprimer le product lui même
-    db.delete(product)
-    db.commit()
-
-    return {"message": f"Product with id {product_id} deleted successfully"}
+async def create_product(payload):
+    try:
+        new_product = await db.create(Products, payload)
+        return new_product
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"Error creating product: {e}") from e
+    
+async def update_product(product_id, payload):
+    try:
+        updated_product = await db.update(Products, product_id, payload)
+        return updated_product
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"Error updating product: {e}") from e
+    
+async def delete_product(product_id):
+    try:
+        await db.delete(Products, product_id)
+        return {"detail": "Permission deleted successfully"}
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"Error deleting product: {e}") from e
